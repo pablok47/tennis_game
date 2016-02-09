@@ -1,8 +1,43 @@
 <html>
-Pablo Kaparis was here! <b>this is bold text</b> and <i>this is italics text</i> and this is normal.
+Pablo Kaparis was here!
+<canvas id="gameCanvas" width="800" height="600"></canvas>
 
 <script>
-  console.log("Hello World!");
+
+var canvas;
+var canvasContext;
+var ballX = 50;
+
+window.onload = function() {
+
+  canvas = document.getElementById('gameCanvas');
+  canvasContext = canvas.getContext('2d');
+
+  var framesPerSecond = 30;
+  setInterval(function() {
+          moveEverthing();
+          drawEverything();
+    }, 1000/framesPerSecond);
+
+}
+
+function moveEverthing() {
+  ballX = ballX + 10;
+
+}
+
+function drawEverything(){
+
+
+  canvasContext.fillStyle = 'black';
+  canvasContext.fillRect(0,0,canvas.width, canvas.height);
+  canvasContext.fillStyle = 'white';
+  canvasContext.fillRect(0, 210, 10, 100);
+  canvasContext.fillStyle = 'red';
+  canvasContext.fillRect(ballX, 100, 10, 10);
+
+
+}
 </script>
 
 
