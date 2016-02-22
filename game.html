@@ -11,7 +11,10 @@ var ballSpeedX = 10;
 var ballSpeedY = 4;
 
 var paddle1Y = 250;
+var paddle2Y = 250;
 const PADDLE_HEIGHT = 80;
+const PADDLE_THICKNESS = 10;
+
 
 function calculateMousePos(evt) {
   var rect = canvas.getBoundingClientRect();
@@ -39,7 +42,7 @@ window.onload = function() {
           drawEverything();
     }, 1000/framesPerSecond);
 
-  canvas.addEventListener("mousemove",
+  canvas.addEventListener('mousemove',
     function(evt) {
         var mousePos = calculateMousePos(evt);
         paddle1Y = mousePos.y-(PADDLE_HEIGHT/2);
@@ -48,16 +51,34 @@ window.onload = function() {
 
 }
 
+function ballReset() {
+  ballSpeedX = -ballSpeedX;
+  ballX = canvas.width/2;
+  ballY = canvas.height/2;
+
+
+}
+
 function moveEverthing() {
   ballX = ballX + ballSpeedX;
   ballY = ballY + ballSpeedY;
 
   if(ballX < 0) {
-    ballSpeedX = -ballSpeedX;
+    if(ballY > paddle1Y && ballY < paddle1Y + PADDLE_HEIGHT) {
+        ballSpeedX = -ballSpeedX;
+    } else {
+        ballReset();
+
+    }
   }
 
   if(ballX > canvas.width) {
-    ballSpeedX = -ballSpeedX;
+    if(ballY > paddle2Y && ballY < paddle2Y + PADDLE_HEIGHT) {
+        ballSpeedX = -ballSpeedX;
+    } else {
+        ballReset();
+
+    }
   }
 
   if(ballY < 0) {
@@ -75,7 +96,10 @@ function drawEverything(){
   colorRect(0,0,canvas.width, canvas.height, 'black');
 
   // this below is the left player paddle
-  colorRect(0,paddle1Y,10,PADDLE_HEIGHT,'white');
+  colorRect(0,paddle1Y,PADDLE_THICKNESS,PADDLE_HEIGHT,'white');
+
+    // this below is the right player paddle
+  colorRect(canvas.width-PADDLE_THICKNESS,paddle2Y,PADDLE_THICKNESS,PADDLE_HEIGHT,'white');
 
   // this below is the red ball
   colorCircle(ballX, ballY, 10, 'white');
